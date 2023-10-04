@@ -1,4 +1,4 @@
-#NextJs The React Framework for the Web
+# NextJs The React Framework for the Web
 
 **What is NextJs ?**
 
@@ -70,7 +70,7 @@ Next.js is a full-stack framework built on top of React. It facilitates building
   - Building a full-fledged e-commerce site with user authentication, product listings, and a checkout process, all managed within a single Next.js project.
 
 
-#Installation
+# Installation
 
 **System Requirements:**
 
@@ -270,7 +270,7 @@ fetch("https://jsonplaceholder.typicode.com/posts", {
 
 ---
 
-###Layouts
+### Layouts
 
 A layout is UI that is shared between multiple pages. On navigation, layouts preserve state, remain interactive, and do not re-render. Layouts can also be nested.
 
@@ -290,7 +290,7 @@ export default function RootLayout({
 }
 ```
 
-###Nesting Layouts
+### Nesting Layouts
 
 Layouts defined inside a folder (e.g. app/dashboard/layout.js) apply to specific route segments (e.g. acme.com/dashboard) and render when those segments are active. By default, layouts in the file hierarchy are nested, which means they wrap child layouts via their children prop.
 
@@ -530,7 +530,409 @@ Route Handlers allow you to create custom request handlers for a given route usi
     <strong>Good to Know:</strong> Route Handlers are only available inside the app directory. They are the equivalent of API Routes inside the pages directory meaning you do not need to use API Routes and Route Handlers together.
 </div>
 
+**Convention**
+Route Handlers are defined in a **route.js|ts** file inside the app directory:
 
-| **Good to Know:** |
-|:------------------|
-| Route Handlers are only available inside the app directory. They are the equivalent of API Routes inside the pages directory meaning you do not need to use API Routes and Route Handlers together. |
+```js
+export async function GET(request) {}
+```
+
+**Supported HTTP Methods**
+
+The following HTTP methods are supported:**GET, POST, PUT, PATCH, DELETE, HEAD**, and **OPTIONS**. If an unsupported method is called, Next.js will return a 405 Method Not Allowed response.
+
+**Extended NextRequest and NextResponse APIs**
+In addition to supporting native Request and Response. Next.js extends them with NextRequest and NextResponse to provide convenient helpers for advanced use cases.
+
+
+
+### Introduction to Zod
+
+[Zod](https://github.com/colinhacks/zod) is a JavaScript library that allows for building schemas to validate, parse, and statically type-check data. It's primarily used in TypeScript projects but can be used in JavaScript projects as well.
+
+#### Why Use Zod?
+
+1. **Type Safety:** Zod schemas are used to derive TypeScript types, ensuring type safety without having to duplicate type definitions.
+   
+2. **Validation:** It provides a powerful and easy way to validate data and extract the validated data in a type-safe manner.
+   
+3. **Parsing:** Zod helps in parsing data, ensuring that the data adheres to expected formats and types.
+
+4. **Error Handling:** It provides detailed error messages when data fails validation, making it easier to identify and fix issues.
+
+5. **Lightweight:** Zod is lightweight and has no dependencies, making it a good choice for projects that need to manage their bundle size.
+
+6. **Extensibility:** It allows for creating custom validations using its extensible API.
+
+### Example Usage of Zod
+
+Let's go through a simple example of how Zod can be used to validate and parse data. First, ensure that Zod is installed in your project. If not, you can add it using npm or Yarn:
+
+```sh
+npm install zod
+```
+or
+```sh
+yarn add zod
+```
+
+Below is a TypeScript example demonstrating how you might use Zod to validate user data:
+
+```javascript
+import { z } from 'zod';
+
+// Define a schema
+// Define a Zod schema
+const PostSchema = z.object({
+    title: z.string(),
+    // Add any additional properties and their validations here
+});
+export default PostSchema;
+
+// Validate the data
+
+export const POST = async (req) => {
+
+    const body = await req.json();
+
+    const result = PostSchema.safeParse(body);
+
+    if (result.success) {
+        // Your logic for handling valid data goes here
+        // You can safely use result.data
+        return NextResponse.json({ message: "Successful validation" });
+    } else {
+        // Your logic for handling validation errors goes here
+        return NextResponse.json({
+            message: "Validation failed",
+            errors: result.error.errors,
+        });
+    }
+};
+
+
+```
+The **safeParse** method returns an object with a success boolean property indicating whether the parsing was successful or not. If success is true, the validated data can be accessed via the data property. If success is false, the validation error can be accessed via the error property.
+
+
+
+### Introducing Prisma
+
+#### What is Prisma?
+
+Prisma is a modern database access toolkit that simplifies database access and ensures type safety. It replaces traditional ORMs and simplifies database workflows.
+
+#### Key Features
+
+- **Prisma Client**: An auto-generated query builder that enables type-safe database access.
+- **Prisma Migrate**: A declarative data modeling and migration system.
+- **Prisma Studio**: A modern, intuitive database management UI.
+
+### Getting Started with Prisma
+
+#### Installation
+
+Install Prisma CLI globally using npm or yarn.
+
+```shell
+npm install prisma -D
+```
+
+#### Initialization
+
+Create a new Prisma project or integrate it into an existing project.
+
+```shell
+npx prisma init
+```
+
+#### Configuring the Database
+
+Specify your database connection in `prisma/schema.prisma`.
+
+```prisma
+datasource db {
+  provider = "postgresql" // default provider you can use mongodb, mysql or any other database
+  url      = env("DATABASE_URL")
+}
+```
+
+### Prisma Data Types
+
+Prisma supports a variety of data types, here are a few:
+
+- **String**: Text data.
+- **Int**: Integer numbers.
+- **Float**: Floating-point numbers.
+- **Boolean**: True/False values.
+- **DateTime**: Date and time values.
+- **Json**: JSON objects.
+- **Enum**: Enumerated values.
+
+### Prisma Models
+
+Models in Prisma represent the entities of your application domain and are defined in the Prisma schema. They map to tables in the database.
+
+
+The provided code snippets illustrate the use of `ObjectId` in MongoDB. `ObjectId` is a 12-byte identifier typically employed to uniquely identify documents within a collection. MongoDB automatically generates an `_id` field of type `ObjectId` if a new document doesn't have one. 
+
+### Explanation of the Code
+
+#### Using ObjectId
+It is common practice for the _id field of a MongoDB document to contain an **ObjectId**:
+
+```json
+{
+  "_id": {"$oid": "60d599cb001ef98000f2cad2"},
+  "createdAt": {"$date": {"$numberLong": "1624611275577"}},
+  "email": "ella@prisma.io",
+  "name": "Ella",
+  "role": "ADMIN"
+}
+```
+This JSON-like code represents a MongoDB document, which includes:
+- An `_id` field with an `ObjectId` as a unique identifier for the document.
+- A `createdAt` field with a date as a numeric string. 
+- `email`, `name`, and `role` fields as additional data fields.
+
+#### 2. Prisma Model with String Type ID
+```prisma
+model User {
+  id       String @id @default(auto()) @map("_id") @db.ObjectId
+  // Other fields
+}
+```
+This Prisma model represents a `User`:
+- The `id` field is of type `String`, mapped to an `_id` in MongoDB, and it uses an `ObjectId` type in the database. 
+- `@default(auto())` ensures that a new `ObjectId` is auto-generated for new documents.
+
+#### 3. Prisma Model with Bytes Type ID
+```prisma
+model User {
+  id       Bytes @id @default(auto()) @map("_id") @db.ObjectId
+  // Other fields
+}
+```
+Similar to the model above, this `User` model uses a `Bytes` type for the `id`, which will also map to MongoDB's `ObjectId`.
+
+### Notes:
+- `ObjectId`: This is a unique identifier used to locate documents within a collection. The `ObjectId` is like a primary key as it's unique across the collection.
+- `@default(auto())`: This Prisma attribute is used to auto-generate `ObjectId` upon the creation of a new document.
+- `@map("_id")`: Maps the `id` field in your Prisma model to the `_id` field in MongoDB.
+- `@db.ObjectId`: Indicates that the field uses MongoDB's `ObjectId` type.
+
+### Important Points:
+1. **Use of `ObjectId`**: It's commonly used in the `_id` field but can also be used in other fields like relation scalars.
+2. **Type of `ObjectId`**: It must be either `String` or `Bytes` in the Prisma model.
+3. **Auto-generation**: By using `@default(auto())`, a new `ObjectId` is automatically generated when a new document is created.
+   
+### Usage in Prisma:
+You define your Prisma models to interact with MongoDB collections and documents. The defined models must adhere to the structure of the documents in the MongoDB collection for proper interaction. 
+
+### Summary:
+- **In MongoDB**: Each document typically has an `_id` field with an `ObjectId` to uniquely identify it.
+- **In Prisma**: Models that interact with MongoDB often map a field to the `_id` of a MongoDB document and utilize `ObjectId` for unique identification. Different attributes and type definitions ensure compatibility and functionality.
+
+
+#### Example: Defining a Simple Model
+
+```prisma
+model User {
+   id String @id @default(auto()) @map("_id") @db.ObjectId
+  name  String
+  email String  @unique
+  posts Post[]
+}
+```
+
+Here, `User` is a model with fields `id`, `name`, and `email`. The `posts` field represents a relation to another model, `Post`.
+
+### Creating and Using Models
+
+#### Example: Extending the User Model
+
+Let's extend our `User` model by adding a new model, `Post`.
+
+```prisma
+model Post {
+  id String @id @default(auto()) @map("_id") @db.ObjectId
+  title     String
+  content   String?
+  author    User     @relation(fields: [authorId], references: [id])
+  authorId  ObjectId
+}
+```
+
+#### Generating Prisma Client
+
+Generate Prisma Client based on your data model.
+
+```shell
+npx prisma generate
+```
+
+
+`npx prisma db push` and `npx prisma generate` are commands provided by Prisma, but they serve different purposes:
+
+### 1. `npx prisma db push`
+
+- **Purpose**: To update the database schema to match the Prisma schema.
+- **Use-case**: Often used in development to quickly iterate over schema changes without having to handle migrations. It is not recommended for use in production.
+- **Behavior**: 
+  - It updates the database schema to match the Prisma schema, **without** creating migrations.
+  - It can result in data loss if changes are not backward compatible (such as changing a column type or deleting a column).
+- **Command**:
+  ```sh
+  npx prisma db push
+  ```
+- **Key Considerations**: 
+  - It does not handle database migrations or the migration history.
+  - It’s a way to prototype quickly, but for a more controlled and incremental schema update, migrations are preferred.
+
+### 2. `npx prisma generate`
+
+- **Purpose**: To generate Prisma Client based on your Prisma schema.
+- **Use-case**: Used after defining or updating the Prisma schema to ensure that Prisma Client is up to date and can be used in your application code.
+- **Behavior**: 
+  - Generates Prisma Client in `node_modules/@prisma/client`.
+  - Does not affect the database schema.
+- **Command**:
+  ```sh
+  npx prisma generate
+  ```
+- **Key Considerations**: 
+  - Should be run after every change to the Prisma schema to ensure that the Prisma Client API is updated.
+  - If using Prisma Migrate, it is generally run after migration commands to ensure the client is in sync with the schema.
+
+### In a Typical Development Workflow:
+
+- You define or modify your Prisma schema.
+- If using migrations: 
+  - You create a migration using `npx prisma migrate dev --name <migration-name>`.
+  - The above command also runs `prisma generate` automatically unless configured otherwise.
+- If not using migrations and prototyping:
+  - You push changes to the database using `npx prisma db push`.
+  - You run `npx prisma generate` to update the Prisma Client.
+  
+### Summary:
+
+- `npx prisma db push`: Quick-and-dirty way to update the database schema for prototyping.
+- `npx prisma generate`: Generates/updates Prisma Client to match the Prisma schema and should be run after every schema change.
+
+Both commands are part of a typical Prisma workflow, but they handle different aspects of it. Always use them as per your requirement in the development or production workflow.
+
+
+
+
+
+#### Using Prisma Client to Access the Database
+
+
+# Best Practice for Instantiating `PrismaClient` with Next.js
+
+## Problem
+
+Many users have encountered the following warning while working with Next.js in development:
+
+> warn(prisma-client) There are already 10 instances of Prisma Client actively running.
+
+Related discussions and issues are available on this topic.
+
+In development mode, executing `next dev` clears the Node.js cache upon each run. Consequently, due to hot reloading, a new `PrismaClient` instance is initialized each time, establishing a connection to the database. Rapid instantiation of `PrismaClient` can swiftly exhaust the database connections because each instance maintains its own connection pool.
+
+## Solution
+
+The optimal solution is to instantiate a single instance of `PrismaClient` and store it on the `globalThis` object. A check should then be implemented to only instantiate `PrismaClient` if it's not already present on the `globalThis` object. If it is present, the existing instance should be reused to prevent the instantiation of additional `PrismaClient` instances.
+
+### Example Code
+
+```javascript
+import { PrismaClient } from '@prisma/client'
+
+let prisma
+
+// check if PrismaClient is not on `globalThis` object
+if (process.env.NODE_ENV === 'production') {
+  prisma = new PrismaClient()
+} else {
+  if (!globalThis.prisma) {
+    globalThis.prisma = new PrismaClient()
+  }
+  prisma = globalThis.prisma
+}
+
+export default prisma
+
+```
+
+
+### Conclusion
+
+Prisma provides a streamlined, type-safe way to interact with your database, manage your data model, and carry out database migrations. Its ease of use, powerful features, and scalability make it an excellent choice for modern application development. Further exploration can be done via [Prisma's documentation](https://www.prisma.io/docs/).
+
+
+### Auto-completion using plain JavaScript
+
+Auto-completion is one of the powerful features provided by Prisma when using TypeScript. However, if you are using plain JavaScript, you might lose some of these capabilities. Nonetheless, you can still enable auto-completion in JavaScript by type-checking your JavaScript files using JSDoc and TypeScript as a background service.
+
+Here's how you might achieve that:
+
+### 1. Install TypeScript (as a devDependency)
+
+Even though you're using JavaScript, installing TypeScript in your project can help VSCode and other editors provide better autocompletion and type checking.
+
+```sh
+npm install --save-dev typescript
+```
+
+### 2. Configure TypeScript for JSDoc
+
+Create a `tsconfig.json` file in your project root (if you don't have one already) with the following contents:
+
+```json
+{
+  "compilerOptions": {
+    "allowJs": true,
+    "checkJs": true,
+    "noEmit": true,
+    "strict": false,
+    "target": "es6",
+    "moduleResolution": "node",
+    "baseUrl": "."
+  },
+  "include": [
+    "next.config.js",
+    "**/*.js"
+  ]
+}
+```
+
+- `"checkJs": true` enables type-checking for JavaScript files.
+- `"noEmit": true` ensures TypeScript is used only for type-checking and doesn't compile code.
+
+### 3. Use JSDoc for Type Annotations
+
+Use JSDoc comments to annotate types in your JavaScript files. For Prisma, you'll mainly want to type the Prisma client. Here’s an example:
+
+```javascript
+/** @type {import('@prisma/client').PrismaClient} */
+const prisma = require('@prisma/client');
+```
+
+Or if you are using ES6 imports:
+
+```javascript
+import prisma from '@prisma/client';
+
+/** @type {import('@prisma/client').PrismaClient} */
+const prismaClient = prisma;
+```
+
+### 4. Enable Type Checking and Autocompletion in VSCode
+
+If you're using VSCode, it will automatically pick up the `tsconfig.json` and provide autocompletion and type-checking. If you are using a different editor, you may need to check the specific settings or plugins needed to utilize TypeScript for type checking in JavaScript.
+
+### Notes:
+
+- If you find the type checking too strict or it’s providing unwanted noise, you can adjust the `"strict": false` setting in the `tsconfig.json` file.
+- If you've specific files or directories you don't want TypeScript to check, you can adjust or add them to the `"exclude"` array in `tsconfig.json`.

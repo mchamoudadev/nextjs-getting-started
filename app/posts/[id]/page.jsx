@@ -3,7 +3,7 @@ import React, { Suspense } from 'react';
 
 const PostInfoPage = async ({ params }) => {
 
-    const data = await fetch(`http://localhost:3000/api/posts/${params.id}`);
+    const data = await fetch(`http://localhost:3000/api/post/${params.id}`);
 
     const post = data.ok ? await data.json() : null;
 

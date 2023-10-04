@@ -6,9 +6,9 @@ import UsersList from "./users/UsersList";
 export default function Home() {
   return (
     <main>
-      <Suspense fallback={<p>Loading... users</p>}>
+      {/* <Suspense fallback={<p>Loading... users</p>}>
         <UsersList />
-      </Suspense>
+      </Suspense> */}
       <Suspense fallback={<p>Loading... posts</p>}>
         <PostList />
       </Suspense>

@@ -9,13 +9,19 @@
     "lint": "next lint"
   },
   "dependencies": {
+    "@prisma/client": "^5.4.0",
+    "next": "latest",
     "react": "latest",
     "react-dom": "latest",
-    "next": "latest"
+    "zod": "^3.22.3"
   },
   "devDependencies": {
+    "@types/node": "20.8.2",
+    "@types/react": "18.2.24",
     "autoprefixer": "latest",
     "postcss": "latest",
-    "tailwindcss": "latest"
+    "prisma": "^5.4.0",
+    "tailwindcss": "latest",
+    "typescript": "^5.2.2"
   }
 }
