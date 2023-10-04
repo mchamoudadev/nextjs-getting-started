@@ -11,11 +11,8 @@ const PostInfoPage = async ({ params }) => {
 
     return (
         <Suspense fallback={<p>Loading post info ...</p>}>
-
             <h1>PostInfoPage</h1>
-
             <span>{post.title}</span>
-
         </Suspense>
     );
 };
