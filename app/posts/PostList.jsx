@@ -3,29 +3,20 @@ import Link from 'next/link';
 import React, { Suspense } from 'react';
 import DeleteButton from './DeleteButton';
 
+import { getBaseUrl } from '../util/baseURL';
+
 const PostList = async () => {
+
+    const baseURL = getBaseUrl();
 
     // await new Promise((resolve,) => setTimeout(resolve, 15000));
 
-    const data = await fetch('http://localhost:3000/api/post', { cache: "no-store" });
+    const data = await fetch(`${baseURL}/api/post`, { cache: "no-store" });
 
     const postsData = await data.json();
 
 
-
-
-
     return (
-        // <>
-        //     <h1 className='text-4xl text-gray-800 font-bold'>Posts List</h1>
-        //     {
-        //         posts.map(post => (
-        //             <Link className='flex p-4 border-blue-300 border-b-2 bg-slate-200' href={`/posts/${post.id}`} key={post.id}>{post.title}</Link>
-        //         ))
-        //     }
-        // </>
-
-
         <div className="flex flex-col justify-between items-center min-h-screen bg-gray-100">
             <h1 className="text-4xl font-bold mb-8">Posts List</h1>
             <div className="w-full md:w-2/3 lg:w-1/2">
@@ -47,8 +38,6 @@ const PostList = async () => {
                 </ul>
             </div>
         </div>
-
-
     );
 };
 
