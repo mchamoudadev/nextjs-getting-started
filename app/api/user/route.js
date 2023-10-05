@@ -10,7 +10,7 @@ export async function GET(request, { params }) {
 
     const usersInfo = await prisma.user.findMany();
 
-    return NextResponse.json(usersInfo);
+    return NextResponse.json(usersInfo, { status: 200 });
 
 };
 
