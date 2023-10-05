@@ -7,15 +7,16 @@ export async function GET(request, { params }) {
 
     const postInfo = await prisma.post.findUnique({ where: { id: params.id } });
 
-    return NextResponse.json(postInfo, { status: 200 });
+    return NextResponse.json({ message: postInfo }, { status: 200 });
 
 };
 
-export async function POST(request, { params }) {
+
+export async function DELETE(request, { params }) {
 
     const deletePost = await prisma.post.delete({ where: { id: params.id } });
 
-    return NextResponse.json(deletePost, { status: 200 });
+    return NextResponse.json({ message: deletePost }, { status: 200 });
 };
 
 
