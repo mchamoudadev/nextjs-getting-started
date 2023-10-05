@@ -941,3 +941,5 @@ If you're using VSCode, it will automatically pick up the `tsconfig.json` and pr
 npx prisma generate && next build
 
 export const dynamic = 'auto';
+
+NEXT_PUBLIC_SITE_URL=http://localhost:3000

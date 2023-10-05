@@ -4,6 +4,10 @@ import PostList from './PostList';
 
 export const dynamic = 'force-dynamic';
 const PostsPage = () => {
+
+    console.log("process.env.NODE_ENV", process.env.NODE_ENV);
+
+
     return (
         <>
             <div>
