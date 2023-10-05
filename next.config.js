@@ -5,6 +5,8 @@ const nextConfig = {
             {
                 source: '/api/:path*',
                 destination: 'https://nextjs-getting-started-1gz8ac5zh-jtechdev.vercel.app/:path*',
+
+
             },
         ];
     },

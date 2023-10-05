@@ -3,7 +3,7 @@ import prisma from "../../../../prisma/client";
 import postSchema from "../schema";
 
 
-export async function POST(request, { params }) {
+export async function GET(request, { params }) {
 
     const postInfo = await prisma.post.findUnique({ where: { id: params.id } });
 
@@ -11,7 +11,7 @@ export async function POST(request, { params }) {
 
 };
 
-export async function DELETE(request, { params }) {
+export async function POST(request, { params }) {
 
     const deletePost = await prisma.post.delete({ where: { id: params.id } });
 

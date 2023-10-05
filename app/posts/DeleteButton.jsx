@@ -11,7 +11,7 @@ const DeleteButton = ({ id }) => {
 
     const handleDelete = async (id) => {
         const data = await fetch(`${baseURL}/api/post/${id}`, {
-            method: 'DELETE'
+            method: 'POST'
         });
         startTransition(() => router.refresh());
     };
