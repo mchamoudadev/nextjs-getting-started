@@ -1,9 +1,12 @@
 import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react';
+import { getBaseUrl } from '../../util/baseURL';
+export const dynamic = 'auto';
 
 const PostInfoPage = async ({ params }) => {
 
-    const data = await fetch(`http://localhost:3000/api/post/${params.id}`);
+    const baseURL = getBaseUrl();
+    const data = await fetch(`${baseURL}/api/post/${params.id}`);
 
     const post = data.ok ? await data.json() : null;
 

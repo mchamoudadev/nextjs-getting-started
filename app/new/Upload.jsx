@@ -2,7 +2,12 @@
 import React, { useState } from 'react';
 import { CldUploadWidget } from 'next-cloudinary';
 import { useRouter } from 'next/navigation';
+import { getBaseUrl } from '../util/baseURL';
+
+export const dynamic = 'auto';
 const Upload = () => {
+
+    const baseURL = getBaseUrl();
 
     const [imageUrl, setImageUrl] = useState(null);
     const [content, setContent] = useState(null);
@@ -14,7 +19,7 @@ const Upload = () => {
         e.preventDefault();
 
 
-        const registerPost = await fetch('http://localhost:3000/api/post', {
+        const registerPost = await fetch(`${baseURL}/api/post`, {
             method: 'POST',
             body: JSON.stringify({ title, content, url: imageUrl })
         });
