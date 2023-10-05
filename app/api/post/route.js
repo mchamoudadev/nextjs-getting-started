@@ -3,14 +3,14 @@ import postSchema from "./schema";
 import prisma from "../../../prisma/client";
 
 
-export const GET = async () => {
+export async function GET(request) {
 
     const postsInfo = await prisma.post.findMany({ orderBy: { id: 'desc' } });
     return NextResponse.json(postsInfo);
 
 };
 
-export const POST = async (request) => {
+export async function POST(request) {
 
 
     try {

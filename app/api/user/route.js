@@ -6,7 +6,7 @@ import userSchema from "./schema";
 import prisma from "../../../prisma/client";
 
 
-export const GET = async (req) => {
+export async function GET(request, { params }) {
 
     const usersInfo = await prisma.user.findMany();
 
@@ -14,8 +14,7 @@ export const GET = async (req) => {
 
 };
 
-
-export const POST = async (request) => {
+export async function POST(request, { params }) {
 
 
     try {
