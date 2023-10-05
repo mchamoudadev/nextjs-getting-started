@@ -1,27 +1,23 @@
 "use client";
 import { useRouter } from 'next/navigation';
 import React, { useTransition } from 'react';
-
+import { getBaseUrl } from '../util/baseURL';
 const DeleteButton = ({ id }) => {
 
     const [transition, startTransition] = useTransition();
 
     const router = useRouter();
+    const baseURL = getBaseUrl();
 
     const handleDelete = async (id) => {
-
-        const data = await fetch(`http://localhost:3000/api/post/${id}`, {
+        const data = await fetch(`${baseURL}/api/post/${id}`, {
             method: 'DELETE'
         });
-
-
         startTransition(() => router.refresh());
-
-
     };
     const handleUpdate = async (id) => {
 
-        const data = await fetch(`http://localhost:3000/api/post/${id}`, {
+        const data = await fetch(`${baseURL}/api/post/${id}`, {
             method: 'PUT'
         });
 
