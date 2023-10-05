@@ -3,7 +3,10 @@ import Link from 'next/link';
 import React, { Suspense } from 'react';
 import DeleteButton from './DeleteButton';
 
+
 import { getBaseUrl } from '../util/baseURL';
+
+export const dynamic = 'auto';
 
 const PostList = async () => {
 
@@ -11,7 +14,7 @@ const PostList = async () => {
 
     // await new Promise((resolve,) => setTimeout(resolve, 15000));
 
-    const data = await fetch(`${baseURL}/api/post`, { cache: "no-store" });
+    const data = await fetch(`${baseURL}/api/post`);
 
     const postsData = await data.json();
 
