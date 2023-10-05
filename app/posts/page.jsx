@@ -1,8 +1,8 @@
 import React, { Suspense } from 'react';
 import PostList from './PostList';
-import PostSkeleton from '../components/PostSkeleton';
 
-export const dynamic = 'auto';
+
+export const dynamic = 'force-dynamic';
 const PostsPage = () => {
     return (
         <>

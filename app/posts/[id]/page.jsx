@@ -1,7 +1,9 @@
 import { notFound } from 'next/navigation';
 import React, { Suspense } from 'react';
 import { getBaseUrl } from '../../util/baseURL';
-export const dynamic = 'auto';
+
+
+export const dynamic = 'force-dynamic';
 
 const PostInfoPage = async ({ params }) => {
 
