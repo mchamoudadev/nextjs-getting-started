@@ -1,10 +1,11 @@
 /** @type {import('next').NextConfig} */
 const nextConfig = {
-    async rewrites() {
+
+    async headers() {
         return [
             {
-                source: '/api/:path*',
-                destination: 'https://nextjs-getting-started-1gz8ac5zh-jtechdev.vercel.app/:path*',
+                // matching all API routes
+                source: "/api/:path*",
                 headers: [
                     { key: "Access-Control-Allow-Credentials", value: "true" },
                     { key: "Access-Control-Allow-Origin", value: "*" },
@@ -18,8 +19,15 @@ const nextConfig = {
                             "X-CSRF-Token, X-Requested-With, Accept, Accept-Version, Content-Length, Content-MD5, Content-Type, Date, X-Api-Version",
                     },
                 ],
+            },
+        ];
+    },
 
-
+    async rewrites() {
+        return [
+            {
+                source: '/api/:path*',
+                destination: 'https://nextjs-getting-started-1gz8ac5zh-jtechdev.vercel.app/:path*',
             },
         ];
     },
