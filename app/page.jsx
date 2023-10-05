@@ -1,7 +1,8 @@
 import { Suspense } from "react";
-import Navbar from "./components/Navbar";
 import PostList from "./posts/PostList";
-import UsersList from "./users/UsersList";
+
+
+export const dynamic = 'force-dynamic';
 
 export default function Home() {
   return (

@@ -6,7 +6,7 @@ import DeleteButton from './DeleteButton';
 
 import { getBaseUrl } from '../util/baseURL';
 
-export const dynamic = 'auto';
+
 
 const PostList = async () => {
 
