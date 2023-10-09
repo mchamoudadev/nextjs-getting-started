@@ -20,7 +20,7 @@ const PostList = async () => {
 
 
     return (
-        <div className="flex flex-col justify-between items-center min-h-screen bg-gray-100">
+        <div className=" mt-24 flex flex-col justify-between items-center ">
             <h1 className="text-4xl font-bold mb-8">Posts List</h1>
             <div className="w-full md:w-2/3 lg:w-1/2">
                 <ul>

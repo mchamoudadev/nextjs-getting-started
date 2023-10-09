@@ -943,3 +943,103 @@ npx prisma generate && next build
 export const dynamic = 'auto';
 
 NEXT_PUBLIC_SITE_URL=http://localhost:3000
+
+
+### NextAuth authentication
+
+1. setup google auth
+2. setup .env file
+3. setup next-auth route 
+4. wrap the authProvider with our entire app 
+5. add login to our navbar 
+6. access user data on the client 
+7. access user data on the server
+8. logout user
+9. customize login and logout actions
+10. primsa adapters mongodb
+11. prisma studio demo
+
+
+prisma adapter mongodb docs
+https://authjs.dev/reference/adapter/prisma
+
+
+to generate nextauth secret you can use openssl
+
+```bash
+openssl rand -base64 32 
+```
+
+
+### next auth schema 
+
+```prisma 
+
+// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+  provider = "prisma-client-js"
+}
+
+datasource db {
+  provider = "mongodb"
+  url      = env("DATABASE_URL")
+}
+
+model Account {
+  id                String  @id @default(auto()) @map("_id") @db.ObjectId
+  userId            String  @db.ObjectId
+  type              String
+  provider          String
+  providerAccountId String
+  refresh_token     String? @db.String
+  access_token      String? @db.String
+  expires_at        Int?
+  token_type        String?
+  scope             String?
+  id_token          String? @db.String
+  session_state     String?
+
+  user User @relation(fields: [userId], references: [id], onDelete: Cascade)
+
+  @@unique([provider, providerAccountId])
+}
+
+model Session {
+  id           String   @id @default(auto()) @map("_id") @db.ObjectId
+  sessionToken String   @unique
+  userId       String   @db.ObjectId
+  expires      DateTime
+  user         User     @relation(fields: [userId], references: [id], onDelete: Cascade)
+}
+
+model User {
+  id            String    @id @default(auto()) @map("_id") @db.ObjectId
+  name          String?
+  email         String?   @unique
+  emailVerified DateTime?
+  image         String?
+  accounts      Account[]
+  sessions      Session[]
+  Post          Post[]
+}
+
+model VerificationToken {
+  id         String   @id @default(auto()) @map("_id") @db.ObjectId
+  identifier String
+  token      String   @unique
+  expires    DateTime
+
+  @@unique([identifier, token])
+}
+
+model Post {
+  id      String  @id @default(auto()) @map("_id") @db.ObjectId
+  title   String
+  user_id String? @db.ObjectId
+  content String
+  url     String
+  User    User?   @relation(fields: [user_id], references: [id])
+}
+```
