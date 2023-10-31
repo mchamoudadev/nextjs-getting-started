@@ -936,3 +936,8 @@ If you're using VSCode, it will automatically pick up the `tsconfig.json` and pr
 
 - If you find the type checking too strict or it’s providing unwanted noise, you can adjust the `"strict": false` setting in the `tsconfig.json` file.
 - If you've specific files or directories you don't want TypeScript to check, you can adjust or add them to the `"exclude"` array in `tsconfig.json`.
+
+to generate random secret number you can use 
+
+openssl rand -base64 32
+
